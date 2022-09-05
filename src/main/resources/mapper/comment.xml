@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dhkim.markone.mapper.CommentMapper">
+
+<!-- <resultMap id="apiResult" type="CommentVO" /> -->
+
+    <select id="selectCommentList" resultType="commentVO" parameterType="commentVO">
+        SELECT 
+        	*
+        FROM 
+        	comment
+        WHERE
+        	1=1 AND olympic_board_idx = #{olympicBoardIdx}
+        
+    </select>
+    
+    <update id="updateComment" parameterType="commentVO">
+        UPDATE
+        	comment
+        SET
+        	olympic_board_idx = #{olympicBoardIdx},
+        	contents = #{contents},
+        	name = #{name},
+        	pass = #{pass}
+        WHERE
+        	1=1
+        	AND idx = #{idx}
+    </update>
+    
+    <insert id="insertComment" parameterType="commentVO">
+    	INSERT INTO comment (olympic_board_idx, contents,name,pass) 
+    	VALUES (#{olympicBoardIdx},#{contents},#{name},#{pass})
+    </insert>
+    
+    <delete id="deleteComment" parameterType="commentVO">
+    	DELETE
+    	FROM
+    		comment
+    	WHERE
+    		idx = #{idx}
+    </delete>
+    
+    <delete id="deleteCommentAll" parameterType="commentVO">
+    	DELETE
+    	FROM
+    		comment
+    	WHERE
+    		olympic_board_idx = #{olympicBoardIdx}
+    </delete>
+    
+ </mapper>

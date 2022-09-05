@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dhkim.markone.mapper.OlympicMapper">
+
+<!-- <resultMap id="apiResult" type="BoardVO" /> -->
+
+	<select id="selectOlympicBoardTotalCnt" resultType="int">
+        SELECT 
+        	COUNT(*)
+        FROM 
+        	olympic_board
+    </select>
+    
+    <select id="selectOlympicBoardList" parameterType="boardVO" resultType="boardVO">
+        SELECT 
+        	*
+        FROM 
+        	olympic_board
+        WHERE
+        	1=1
+        <if test='searchName != null and searchName != ""'>
+			AND name = #{searchName}
+		</if>
+        ORDER BY
+			idx DESC
+		LIMIT
+			#{paging}, #{setPaging}	        
+    </select>
+    
+    <select id="selectOlympicBoardDetail" resultType="boardVO" parameterType="int">
+        SELECT 
+        	*
+        FROM 
+        	olympic_board
+        WHERE
+        	1=1
+        	AND idx = #{idx}
+    </select>
+    
+    <update id="updateOlympicBoard" parameterType="boardVO">
+        UPDATE
+        	olympic_board
+        SET
+        	title = #{title},
+        	contents = #{contents},
+        	file_name = #{fileName},
+        	file_url = #{fileUrl},
+        	name = #{name},
+        	pass = #{pass},
+        	secret_mode = #{secretMode},
+        	content_feel = #{contentFeel},
+        	age = #{age},
+        	gender = #{gender}
+        WHERE
+        	1=1
+        	AND idx = #{idx}
+    </update>
+    
+    <insert id="insertOlympicBoard" parameterType="boardVO" useGeneratedKeys="true" keyProperty="id">
+    	INSERT INTO olympic_board (title,contents,file_name,file_url,name,pass,secret_mode,content_feel,age,gender) 
+    	VALUES (#{title},#{contents},#{fileName},#{fileUrl},#{name},#{pass},#{secretMode},#{contentFeel},#{age},#{gender})
+    </insert>
+    
+    <delete id="deleteOlympicBoard" parameterType="boardVO">
+    	DELETE
+    	FROM
+    		olympic_board
+    	WHERE
+    		idx = #{idx}
+    </delete>
+    
+ </mapper>
